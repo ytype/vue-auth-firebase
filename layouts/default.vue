@@ -1,12 +1,17 @@
 <template>
   <div>
+    <navbar title="vue auth" />
     <nuxt />
   </div>
 </template>
 
 <script>
 import * as firebase from 'firebase'
+import navbar from '@/components/navbar'
 export default {
+  components: {
+    navbar
+  },
   created () {
     try {
       firebase.initializeApp({
@@ -37,6 +42,7 @@ export default {
 </script>
 
 <style>
+*{box-sizing: border-box;}
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;

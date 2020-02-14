@@ -85,60 +85,10 @@ export default {
           }
         )
     },
-    signUserInFacebook ({ commit }) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(
-          (user) => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              name: user.displayName,
-              email: user.email,
-              photoUrl: user.photoURL
-            }
-            commit('setUser', newUser)
-          }
-        )
-        .catch(
-          (error) => {
-            commit('setLoading', false)
-            commit('setError', error)
-            // eslint-disable-next-line no-console
-            console.log(error)
-          }
-        )
-    },
     signUserInGithub ({ commit }) {
       commit('setLoading', true)
       commit('clearError')
       firebase.auth().signInWithPopup(new firebase.auth.GithubAuthProvider())
-        .then(
-          (user) => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              name: user.displayName,
-              email: user.email,
-              photoUrl: user.photoURL
-            }
-            commit('setUser', newUser)
-          }
-        )
-        .catch(
-          (error) => {
-            commit('setLoading', false)
-            commit('setError', error)
-            // eslint-disable-next-line no-console
-            console.log(error)
-          }
-        )
-    },
-    signUserInTwitter ({ commit }) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider())
         .then(
           (user) => {
             commit('setLoading', false)

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <p>user: {{ user }}</p>
-    <p>error: {{ error }}</p>
-    <p>loading: {{ loading }}</p>
-    <form @submit.prevent="onSignin">
+    <form @submit.prevent="onSignup">
       <input
         id="email"
         v-model="email"
@@ -20,14 +17,17 @@
         type="password"
         required
       >
+      <input
+        id="confirmPassword"
+        v-model="confirmPassword"
+        name="confirmPassword"
+        label="Confirm Password"
+        type="password"
+        :rules="[comparePasswords]"
+        required
+      >
       <button type="submit" :disabled="loading" :loading="loading">
         Sign in
-      </button>
-      <button @click.prevent="onSigninGoogle">
-        Login with Google
-      </button>
-      <button @click.prevent="onSigninGithub">
-        Login with Github
       </button>
     </form>
   </div>
@@ -38,10 +38,14 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     }
   },
   computed: {
+    comparePasswords () {
+      return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
+    },
     user () {
       return this.$store.getters.user
     },
@@ -60,23 +64,14 @@ export default {
     }
   },
   methods: {
-    onSignin () {
-      this.$store.dispatch('signUserIn', { email: this.email, password: this.password })
+    onSignup () {
+      this.$store.dispatch('signUserUp', { email: this.email, password: this.password })
     },
     onSigninGoogle () {
       this.$store.dispatch('signUserInGoogle')
     },
     onSigninGithub () {
       this.$store.dispatch('signUserInGithub')
-    },
-    onResetPassword () {
-      if (this.email === '') {
-        return this.$store.dispatch('setError', { message: 'Email can not be blank' })
-      }
-      this.$store.dispatch('resetPasswordWithEmail', { email: this.email })
-    },
-    onDismissed () {
-      this.$store.dispatch('clearError')
     }
   }
 }
